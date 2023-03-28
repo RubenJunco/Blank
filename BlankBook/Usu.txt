@@ -1,0 +1,5 @@
+"Hugo", "Maldonado", "Hug2@gmail.com", "palta",
+"Maria", "Castillo", "Mar93@gmail.com", "Agua",
+"Pedro", "Casas", "PedrM@gmail.com", "Case22",
+"Arturo", "Coronado", "Art78@gmail.com", "Ezquite",
+"Yohanna", "De las Nieves", "Yohu55@gmail.com", "si12345",
