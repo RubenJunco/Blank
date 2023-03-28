@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +16,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class VentanaBlankBook extends JFrame  {
 	
@@ -26,6 +30,8 @@ public class VentanaBlankBook extends JFrame  {
 		this.setTitle("BlankBoock");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+		
+		
 		
 		//menu
 		JPanel panel = new JPanel();	
@@ -82,6 +88,13 @@ public class VentanaBlankBook extends JFrame  {
 		login.setBackground(Color.decode("#A8ACB7"));
 		login.setLayout(null);
 		
+		JLabel Inicio = new JLabel("Iniciar Sesion:");
+		Inicio.setSize(200,50);
+		Inicio.setLocation(100,100);
+		Inicio.setFont(new Font("Arial", Font.BOLD, 16));
+		login.add(Inicio);
+		
+		
 		JLabel usuario1 = new JLabel("Usuario");
 		usuario1.setSize(200,50);
 		usuario1.setLocation(100,150);
@@ -126,38 +139,108 @@ public class VentanaBlankBook extends JFrame  {
 		MenuP.setSize(600,800);
 		MenuP.setLocation(0,0);
 		
-
-		JLabel Saludo = new JLabel("");
-		Saludo.setSize(200,50);
-		Saludo.setLocation(190,600);
-		Saludo.setFont(new Font("Arial", Font.BOLD, 18));
-		MenuP.add(Saludo);
 		
 		JLabel Saludo1 = new JLabel("");
-		Saludo1.setSize(600,800);
+		Saludo1.setSize(0,0);
 		Saludo1.setLocation(0,0);
 		Saludo1.setIcon(new ImageIcon("MenuP.png")); //agregar una imagen
-		Saludo1.setBounds(140,300,600,800);
+		Saludo1.setBounds(0,0,600,800);
 		MenuP.add(Saludo1);
 		
+		MenuP.repaint();
+		////////////////////////////////
+		//mi cuenta
+		JPanel CuentaUsu = new JPanel();
+		CuentaUsu.setSize(600,800);
+		CuentaUsu.setLocation(0,0);
+		CuentaUsu.setBackground(Color.decode("#E5E5E5"));
 		
-		JPanel micuenta = new JPanel();
-		MenuP.setBackground(Color.decode("#EAE6E6"));
-		MenuP.setSize(600,800);
-		MenuP.setLocation(0,0);
-		panel.add(micuenta);
+		JLabel edit = new JLabel("Editar Informacion:");
+		edit.setSize(200,50);
+		edit.setLocation(20,360);
+		edit.setFont(new Font("Arial", Font.BOLD, 18));
+		CuentaUsu.add(edit);
 		
+		JLabel nombre11 = new JLabel("Nombre:");
+		nombre11.setSize(200,50);
+		nombre11.setLocation(50,400);
+		nombre11.setFont(new Font("Arial", Font.BOLD, 14));
+		CuentaUsu.add(nombre11);
 		
+		JTextField nombre22 = new JTextField("");
+		nombre22.setSize(200,50);
+		nombre22.setLocation(50,450);
+		nombre22.setOpaque(true);
+		nombre22.setBackground(Color.decode("#FFFFFF"));
+		CuentaUsu.add(nombre22);
 		
+		JLabel apellido11 = new JLabel("Apellido:");
+		apellido11.setSize(200,50);
+		apellido11.setLocation(300,400);
+		apellido11.setFont(new Font("Arial", Font.BOLD, 14));
+		CuentaUsu.add(apellido11);
 		
+		JTextField apellido22 = new JTextField("");
+		apellido22.setSize(200,50);
+		apellido22.setLocation(300,450);
+		apellido22.setOpaque(true);
+		apellido22.setBackground(Color.decode("#FFFFFF"));
+		CuentaUsu.add(apellido22);
 		
+		JLabel email11 = new JLabel("Email:");
+		email11.setSize(200,50);
+		email11.setLocation(50,550);
+		email11.setFont(new Font("Arial", Font.BOLD, 14));
+		CuentaUsu.add(email11);
 		
-		panel.repaint();
+		JTextField email22 = new JTextField("");
+		email22.setSize(200,50);
+		email22.setLocation(50,600);
+		email22.setOpaque(true);
+		email22.setBackground(Color.decode("#FFFFFF"));
+		CuentaUsu.add(email22);
 		
+		JLabel contraseña11 = new JLabel("Contraseña:");
+		contraseña11.setSize(200,50);
+		contraseña11.setLocation(300,550);
+		contraseña11.setFont(new Font("Arial", Font.BOLD, 14));
+		CuentaUsu.add(contraseña11);
 		
+		JTextField contraseña22 = new JTextField("");
+		contraseña22.setSize(200,50);
+		contraseña22.setLocation(300,600);
+		contraseña22.setOpaque(true);
+		contraseña22.setBackground(Color.decode("#FFFFFF"));
+		CuentaUsu.add(contraseña22);
 		
+		JTable tabla = new JTable();
+	    JScrollPane scrollPane = new JScrollPane();
 		
-		
+	    DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre:");
+        modelo.addColumn("Apellido:");
+        modelo.addColumn("Email:");
+        modelo.addColumn("Contraseña:");
+        modelo.addRow(new Object[] {"Ruben", "Junco","Abd03@gmail.com","gonorrea"});
+       
+        tabla = new JTable(modelo);
+        scrollPane = new JScrollPane(tabla);
+        Dimension tableSize = new Dimension(300, 200);
+        scrollPane.setPreferredSize(tableSize);
+        scrollPane.setBounds(50, 300, 500, 38);
+        CuentaUsu.add(scrollPane);
+        
+        
+        JButton actualizar = new JButton("Actualizar Informacion");
+        actualizar.setSize(200,40);
+        actualizar.setLocation(300,700);
+        CuentaUsu.add(actualizar);
+        
+        JButton salir = new JButton("salir");
+        salir.setSize(200,40);
+        salir.setLocation(50,700);
+        CuentaUsu.add(salir);
+        
 		
 	/////////////////////////////////////////////////////////////////////////////////	
 		Enter.addActionListener(new ActionListener() {
@@ -170,9 +253,9 @@ public class VentanaBlankBook extends JFrame  {
 				System.out.print("hola");
 				panel.add(login);
 				panel.remove(panel);
-				Enter.setEnabled(false);
-				Enter.setSize(0,0);
-				texto.setSize(0,0);
+			
+				panel.remove(Enter);
+				panel.remove(texto);
 				
 				panel.repaint();
 			}
@@ -188,18 +271,24 @@ public class VentanaBlankBook extends JFrame  {
 			login.add(MenuP);
 			MenuP.remove(login);
 			
-			usuario1.setSize(0,0);
-			usuario2.setSize(0,0);
-			contraseña1.setSize(0,0);
-			contraseña2.setSize(0,0);
-			BottomLog.setSize(0,0);
+			//usuario1.setSize(0,0);
+			login.remove(usuario1);
+		
+			login.remove(usuario2);
 			
+			login.remove(contraseña1);
+		
+			login.remove(contraseña2);
+			
+			login.remove(BottomLog);
+			
+			login.remove(Inicio);
 			m1.setEnabled(true);
 			m2.setEnabled(true);
 			m3.setEnabled(true);
 			
-			MenuP.revalidate();
-			MenuP.repaint();
+			
+			//MenuP.repaint();
 			panel.repaint();
 		}
 		});
@@ -211,15 +300,17 @@ public class VentanaBlankBook extends JFrame  {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					System.out.print("hola");
+
 					
-					MenuP.add(micuenta);
-					micuenta.remove(MenuP);
-					Saludo1.setSize(0,0);
-					
+					MenuP.remove(Saludo1);	
+					MenuP.add(CuentaUsu);
+					CuentaUsu.remove(MenuP);
+					CuentaUsu.repaint();
+					panel.repaint();
 				}
 				});
 		 
-		
+		 panel.repaint();
 		 
 }		
 		
