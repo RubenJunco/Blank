@@ -1,27 +1,43 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class VentanaBlankBook extends JFrame  {
+	
+	FileWriter esc = null;
+	PrintWriter lec = null;
 	
 	public VentanaBlankBook() {
 		this.setVisible(true);
@@ -37,7 +53,7 @@ public class VentanaBlankBook extends JFrame  {
 		JPanel panel = new JPanel();	
 		//panel.setMenuBar
 		JMenuBar menu = new JMenuBar();
-		menu.setSize(this.getWidth(),20);
+		menu.setSize(this.getWidth(),30);
 		panel.add(menu);
 		
 		JMenu m1 = new JMenu("               Cuenta               ");
@@ -70,16 +86,22 @@ public class VentanaBlankBook extends JFrame  {
 		this.getContentPane().add(panel);
 		panel.setLayout(null);
 		
+		
+		JPanel panel1 = new JPanel();
+		panel1.setSize(600,800);
+		panel1.setLocation(0,0);
+		panel.add(panel1);
+		
 		JButton Enter = new JButton();
 		Enter.setIcon(new ImageIcon("Enter.png")); 
-		Enter.setBounds(45,100,500,500);
-		panel.add(Enter);
+		Enter.setBounds(45,200,400,400);
+		panel1.add(Enter);
 		
 		JLabel texto = new JLabel("Power By Ruben Junco ");
 		texto.setSize(300,100);
-		texto.setLocation(180,650);
+		texto.setLocation(180,750);
 		texto.setFont(new Font("Arial", Font.BOLD, 18));
-		panel.add(texto);
+		panel1.add(texto);
 		////////////////////////////////
 		//login
 		JPanel login = new JPanel();
@@ -129,7 +151,7 @@ public class VentanaBlankBook extends JFrame  {
 		login.add(BottomLog);
 		
 		
-		
+	
 		//////////////////////////////////////
 		//Menu principal
 		
@@ -147,7 +169,6 @@ public class VentanaBlankBook extends JFrame  {
 		Saludo1.setBounds(0,0,600,800);
 		MenuP.add(Saludo1);
 		
-		MenuP.repaint();
 		////////////////////////////////
 		//mi cuenta
 		JPanel CuentaUsu = new JPanel();
@@ -213,22 +234,6 @@ public class VentanaBlankBook extends JFrame  {
 		contraseña22.setBackground(Color.decode("#FFFFFF"));
 		CuentaUsu.add(contraseña22);
 		
-		JTable tabla = new JTable();
-	    JScrollPane scrollPane = new JScrollPane();
-		
-	    DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre:");
-        modelo.addColumn("Apellido:");
-        modelo.addColumn("Email:");
-        modelo.addColumn("Contraseña:");
-        modelo.addRow(new Object[] {"Ruben", "Junco","Abd03@gmail.com","gonorrea"});
-       
-        tabla = new JTable(modelo);
-        scrollPane = new JScrollPane(tabla);
-        Dimension tableSize = new Dimension(300, 200);
-        scrollPane.setPreferredSize(tableSize);
-        scrollPane.setBounds(50, 300, 500, 38);
-        CuentaUsu.add(scrollPane);
         
         
         JButton actualizar = new JButton("Actualizar Informacion");
@@ -241,6 +246,34 @@ public class VentanaBlankBook extends JFrame  {
         salir.setLocation(50,700);
         CuentaUsu.add(salir);
         
+        
+        JPanel Usuarios = new JPanel();
+        Usuarios.setSize(600,800);
+        Usuarios.setLocation(0,0);
+        Usuarios.setBackground(Color.decode("#CAD3B9"));
+        
+        JLabel TLista = new JLabel("Lista Usuarios");
+        TLista.setSize(200,50);
+        TLista.setLocation(200,100);
+        TLista.setFont(new Font("Arial", Font.BOLD, 24));
+        Usuarios.add(TLista);
+        
+        JButton Tvista = new JButton("Ver usuarios");
+        Tvista.setSize(200,50);
+        Tvista.setLocation(200,200);
+        //Tvista.setFont(new Font("Arial", Font.BOLD, 24));
+        Usuarios.add(Tvista);
+        
+        JButton Tedicion = new JButton("Editar usuarios");
+        Tedicion.setSize(200,50);
+        Tedicion.setLocation(200,350);
+        //Tvista.setFont(new Font("Arial", Font.BOLD, 24));
+        Usuarios.add(Tedicion);
+    
+       
+       
+       
+    	panel.repaint();
 		
 	/////////////////////////////////////////////////////////////////////////////////	
 		Enter.addActionListener(new ActionListener() {
@@ -252,7 +285,7 @@ public class VentanaBlankBook extends JFrame  {
 				// TODO Auto-generated method stub
 				System.out.print("hola");
 				panel.add(login);
-				panel.remove(panel);
+				panel.remove(panel1);
 			
 				panel.remove(Enter);
 				panel.remove(texto);
@@ -306,14 +339,195 @@ public class VentanaBlankBook extends JFrame  {
 					MenuP.add(CuentaUsu);
 					CuentaUsu.remove(MenuP);
 					CuentaUsu.repaint();
-					panel.repaint();
+					//CuentaUsu.revalidate();
+					panel1.repaint();
 				}
 				});
 		 
 		 panel.repaint();
 		 
-}		
+	
+	
+	//cerrar sesion y reinicio
+	jm2.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	        VentanaBlankBook.this.setVisible(false); 
+	        VentanaBlankBook nuevaVentana = new VentanaBlankBook(); 
+	        nuevaVentana.setVisible(true); 
+	    }
+	});
+	
+	
+	jm3.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+			CuentaUsu.add(Usuarios);
+			MenuP.add(Usuarios);
+			Usuarios.remove(MenuP);
+			MenuP.remove(Saludo1);
+			Usuarios.remove(CuentaUsu);
+			CuentaUsu.remove(nombre11);
+			CuentaUsu.remove(nombre22);
+			CuentaUsu.remove(apellido11);
+			CuentaUsu.remove(apellido22);
+			CuentaUsu.remove(email11);
+			CuentaUsu.remove(email22);
+			CuentaUsu.remove(contraseña11);
+			CuentaUsu.remove(contraseña22);
+			CuentaUsu.remove(actualizar);
+			CuentaUsu.remove(salir);
+			
+			
+			Usuarios.repaint();
+	    }
 		
+		
+	});
+	
+	
+	
+	
+	
+	jm5.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	        
+	    	JOptionPane.showMessageDialog(null, "1.Hacer click en la opcion Usuarios en el menu superior\n 2.Hacer click en la opcion CREAR USUARIO en el menu\n 3.Llenar los campos solicitados\n 4.Escribir una descripcion breve de ti\n 5.Seleccione su comida favorita\n 6.Seleccione su color favorito\n 7.Hacer click en el boton CREAR USUSARIO\n 8.Listo, el usuario a sido creado");
+	    			
+	    	                                   
+	    	
+	    }
+	});
+	
+	
+	
+	Tvista.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	        
+	 List<String[]> datos = new ArrayList<>();
+
+     try {
+         Scanner scanner = new Scanner(new File("Usu.txt"));
+         while (scanner.hasNextLine()) {
+             String[] fila = scanner.nextLine().split(",");
+             datos.add(fila);
+         }
+         scanner.close();
+     } catch (FileNotFoundException e3) {
+         e3.printStackTrace();
+     }
+
+
+     String[] columnas = { "Nombre", "Apellidos", "Correo","Passaword"};
+     DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+     for (String[] fila : datos) {
+         modelo.addRow(fila);
+     }
+     JTable tabla = new JTable(modelo);
+     JScrollPane scrollPane = new JScrollPane(tabla);
+     JFrame TabUsuarios = new JFrame("Usuarios:");
+     TabUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     TabUsuarios.add(scrollPane);
+     TabUsuarios.pack();
+     TabUsuarios.setVisible(true);
+    	
+	    }
+	});
+	
+	
+	Tedicion.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+			File archivo = new File("Usu.txt");
+	        
+	        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+	            String linea;
+	            while ((linea = reader.readLine()) != null) {
+	                System.out.println(linea);
+	               
+	            }
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+			
+		}});
+	
+	
+	actualizar.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			try {
+                PrintWriter escritor = new PrintWriter(new FileWriter("Admin.txt"));
+                escritor.println(nombre22.getText());
+                escritor.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+	    	JOptionPane.showMessageDialog(null, " Se a modificado la informacion");
+
+		}});
+	
+	actualizar.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			try {
+                PrintWriter escritor = new PrintWriter(new FileWriter("Admin.txt"));
+                escritor.println(apellido22.getText());
+                escritor.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+	    	JOptionPane.showMessageDialog(null, " Se a modificado la informacion");
+
+		}});
+	
+	actualizar.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			try {
+                PrintWriter escritor = new PrintWriter(new FileWriter("Admin.txt"));
+                escritor.println(email22.getText());
+                escritor.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+	    	JOptionPane.showMessageDialog(null, " Se a modificado la informacion");
+
+		}});
+	
+	actualizar.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			try {
+                PrintWriter escritor = new PrintWriter(new FileWriter("Admin.txt"));
+                escritor.println(contraseña22.getText());
+                escritor.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+			
+	    	JOptionPane.showMessageDialog(null, " Se a modificado la informacion");
+
+		}});
+	
+	}
+	
+	
+	
+	
 		public static void main(String[] args) {
 			// TODO Auto-generated method stub 
 
